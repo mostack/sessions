@@ -1,8 +1,8 @@
 package sessions
 
 import (
-	"github.com/boj/redistore"
 	"github.com/gorilla/sessions"
+	"github.com/mostack/redistore"
 )
 
 // RedisStore is an interface that represents a Cookie based storage
@@ -29,6 +29,14 @@ type RediStore interface {
 // if set, must be either 16, 24, or 32 bytes to select AES-128, AES-192, or AES-256 modes.
 func NewRediStore(size int, network, address, password string, keyPairs ...[]byte) (RediStore, error) {
 	store, err := redistore.NewRediStore(size, network, address, password, keyPairs...)
+	if err != nil {
+		return nil, err
+	}
+	return &rediStore{store}, nil
+}
+
+func NewRediStoreWithDB(size int, network, address, password, DB string, keyPairs ...[]byte) (RediStore, error) {
+	store, err := redistore.NewRediStoreWithDB(size, network, address, password, DB, keyPairs...)
 	if err != nil {
 		return nil, err
 	}
