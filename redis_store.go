@@ -1,8 +1,8 @@
 package sessions
 
 import (
+	"github.com/boj/redistore"
 	"github.com/gorilla/sessions"
-	"github.com/mostack/redistore"
 )
 
 // RedisStore is an interface that represents a Cookie based storage
